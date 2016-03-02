@@ -9,6 +9,10 @@
 @import Foundation;
 
 
+@class CLLTableViewCellController;
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface CLLTableViewSectionController : NSObject
 
 /*!
@@ -25,11 +29,13 @@
 /*!
  @abstract Initializes the section controller with the specified array of cell controllers.
  */
-- (instancetype)initWithCellControllers:(NSArray *)cellControllers NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCellControllers:(NSArray<CLLTableViewCellController *> *)cellControllers NS_DESIGNATED_INITIALIZER;
 
 /*!
  @abstract Initializes the section controller with the specified array of cell controllers and section title.
  */
-- (instancetype)initWithCellControllers:(NSArray *)cellControllers sectionTitle:(NSArray *)sectionTitle;
+- (instancetype)initWithCellControllers:(NSArray<CLLTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -52,6 +52,12 @@
 @property (nonatomic, strong, readonly) Class cellClass;
 
 /*!
+ @abstract The cell that is being displayed.
+ @discussion This is set in -beginDisplayingCell:inTableView: and unset in -endDisplayingCell:inTableView.
+ */
+@property (nonatomic, weak, readonly) UITableViewCell *cell;
+
+/*!
  @abstract Indicates whether the controller should register its cell type with the table view.
  @discussion Default implementation returns YES, indicating that the cell class or nib should be registered
  with the table view. Return NO in cases where this is handled by other means, e.g. if using prototype cells in a storyboard.

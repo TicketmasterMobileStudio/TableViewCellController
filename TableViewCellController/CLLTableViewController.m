@@ -16,4 +16,370 @@
 
 @implementation CLLTableViewController
 
+@synthesize sectionControllers = _sectionControllers;
+
+
+#pragma mark - Initialization & View Lifecycle
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self commonInitialization];
+    }
+    return self;
+}
+
+
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self commonInitialization];
+    }
+    return self;
+}
+
+
+- (void)commonInitialization
+{
+    _automaticallyAdjustsTableViewInsetsOnKeyboardFrameChange = YES;
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    NSAssert(self.tableView, @"tableView is not initialized");
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+
+    NSAssert(self.sectionControllers, @"sectionControllers is not initialized");
+
+    for (CLLTableViewSectionController *sectionController in self.sectionControllers) {
+        for (CLLTableViewCellController *cellController in sectionController.cellControllers) {
+            cellController.delegate = self;
+        }
+    }
+
+    [self registerTableViewCells];
+
+    [self updateKeyboardNotificationObservation];
+}
+
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+}
+
+
+#pragma mark - Section controllers
+
+- (NSArray *)sectionControllers
+{
+    if (!_sectionControllers) {
+        [self loadSectionControllers];
+    }
+
+    return _sectionControllers;
+}
+
+
+- (void)setSectionControllers:(NSArray *)sectionControllers
+{
+    // TODO: the below is a temporary measure to address tableview insert/delete issues with cell controllers
+    // clean up old section controllers, since they might not be properly de-configured in cellDidEndDisplaying
+
+    // de-configure only the removed ones
+    NSMutableSet *removedCellControllers = [NSMutableSet set];
+    for (CLLTableViewSectionController *sectionController in _sectionControllers) {
+        [removedCellControllers addObjectsFromArray:sectionController.cellControllers];
+    }
+    NSMutableSet *newCellControllers = [NSMutableSet set];
+    for (CLLTableViewSectionController *sectionController in sectionControllers) {
+        [newCellControllers addObjectsFromArray:sectionController.cellControllers];
+    }
+    [removedCellControllers minusSet:newCellControllers];
+
+    for (CLLTableViewCellController *cellController in removedCellControllers) {
+        [cellController endDisplayingCell:nil inTableView:nil];
+    }
+
+    _sectionControllers = [sectionControllers copy];
+}
+
+- (void)loadSectionControllers
+{
+}
+
+
+- (void)registerTableViewCells
+{
+    NSMutableDictionary *registeredReuseIdentifiers = [[NSMutableDictionary alloc] init];
+
+    for (CLLTableViewSectionController *sectionController in self.sectionControllers) {
+        for (CLLTableViewCellController *controller in sectionController.cellControllers) {
+            if ([controller shouldAutomaticallyRegisterWithTableView]) {
+                Class controllerClass = controller.class;
+                NSString *reuseIdentifier = controller.cellReuseIdentifier;
+                NSAssert(reuseIdentifier, @"Reuse identifier for %@ is nil", controllerClass);
+
+
+                Class registeredClass = [registeredReuseIdentifiers objectForKey:reuseIdentifier];
+                if (registeredClass) {
+                    NSAssert(registeredClass == controllerClass,
+                             @"Multiple cell controller classes (%@ and %@) register reuse identifier \"%@\"",
+                             registeredClass, controllerClass, reuseIdentifier);
+                    continue;
+                }
+
+                registeredReuseIdentifiers[reuseIdentifier] = controllerClass;
+
+                if (controller.cellNib) {
+                    [self.tableView registerNib:controller.cellNib forCellReuseIdentifier:reuseIdentifier];
+                } else if (controller.cellClass) {
+                    [self.tableView registerClass:controller.cellClass forCellReuseIdentifier:reuseIdentifier];
+                } else {
+                    NSAssert(NO, @"Nil cell nib and cell class for cell controller class %@", controllerClass);
+                }
+
+            }
+        }
+    }
+}
+
+//
+//- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+//{
+//    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+//
+//    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+//        [self.tableView beginUpdates];
+//        [self.tableView endUpdates];
+//    } completion:nil];
+//}
+
+
+
+#pragma mark - Keyboard adjustment
+
+- (void)setAutomaticallyAdjustsTableViewInsetsOnKeyboardFrameChange:(BOOL)adjusts
+{
+    if (_automaticallyAdjustsTableViewInsetsOnKeyboardFrameChange != adjusts) {
+        _automaticallyAdjustsTableViewInsetsOnKeyboardFrameChange = adjusts;
+        [self updateKeyboardNotificationObservation];
+    }
+}
+
+
+- (void)updateKeyboardNotificationObservation
+{
+    if (self.automaticallyAdjustsScrollViewInsets) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillChangeFrame:)
+                                                     name:UIKeyboardWillChangeFrameNotification
+                                                   object:nil];
+    } else {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    }
+}
+
+
+- (void)keyboardWillChangeFrame:(NSNotification *)notification
+{
+    if (!self.isViewLoaded || !self.view.window) {
+        return;
+    }
+
+    CGRect keyboardFrameEndInScreenCoordinates = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect keyboardFrameInWindowCoordinates = [self.view.window convertRect:keyboardFrameEndInScreenCoordinates fromWindow:nil];
+    CGRect keyboardFrameInViewCoordinates = [self.view convertRect:keyboardFrameInWindowCoordinates fromView:self.view.window];
+    CGRect keyboardFrameOnScreen = CGRectIntersection(self.view.bounds, keyboardFrameInViewCoordinates);
+
+    UIEdgeInsets contentInset = self.tableView.contentInset;
+    contentInset.bottom = keyboardFrameOnScreen.size.height;
+    self.tableView.contentInset = contentInset;
+
+    UIEdgeInsets scrollIndicatorInsets = self.tableView.scrollIndicatorInsets;
+    scrollIndicatorInsets.bottom = keyboardFrameOnScreen.size.height;
+    self.tableView.scrollIndicatorInsets = scrollIndicatorInsets;
+}
+
+
+#pragma mark - Table View
+
+- (CLLTableViewCellController *)cellControllerForIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section < self.sectionControllers.count) {
+        CLLTableViewSectionController *sectionController = self.sectionControllers[indexPath.section];
+        if (indexPath.row < sectionController.cellControllers.count) {
+            return sectionController.cellControllers[indexPath.row];
+        }
+    }
+
+    return nil;
+}
+
+
+- (NSIndexPath *)indexPathForCellController:(CLLTableViewCellController *)cellController
+{
+    __block NSIndexPath *indexPath = nil;
+
+    [self.sectionControllers enumerateObjectsUsingBlock:^(CLLTableViewSectionController *sectionController, NSUInteger idx, BOOL *stop) {
+        NSInteger row = [sectionController.cellControllers indexOfObjectIdenticalTo:cellController];
+
+        if (row != NSNotFound) {
+            NSInteger section = idx;
+            indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            *stop = YES;
+        }
+    }];
+
+    return indexPath;
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.sectionControllers.count;
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section >= self.sectionControllers.count) {
+        return 0;
+    }
+
+    CLLTableViewSectionController *sectionController = self.sectionControllers[section];
+    return sectionController.cellControllers.count;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellController.cellReuseIdentifier forIndexPath:indexPath];
+    [cellController configureCell:cell];
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    [cellController beginDisplayingCell:cell inTableView:tableView];
+}
+
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    if (cellController.cell == cell) {
+        [cellController endDisplayingCell:cell inTableView:tableView];
+    }
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    return [cellController cellHeightForWidth:CGRectGetWidth(tableView.bounds)];
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    return cellController.target && cellController.action;
+}
+
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    return cellController.target && cellController.action ? indexPath : nil;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSMethodSignature *noArgumentSignature = nil;
+    static NSMethodSignature *senderSignature = nil;
+    static NSMethodSignature *senderIndexPathSignature = nil;
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        noArgumentSignature = [self methodSignatureForSelector:@selector(selectTableViewCellNoArgumentSelector)];
+        senderSignature = [self methodSignatureForSelector:@selector(selectTableViewCellSenderSelector:)];
+        senderIndexPathSignature = [self methodSignatureForSelector:@selector(selectTableViewCellSender:indexPathSelector:)];
+    });
+
+    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    if (cellController.target && cellController.action) {
+        NSMethodSignature *signature = [cellController.target methodSignatureForSelector:cellController.action];
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        if ([signature isEqual:noArgumentSignature]) {
+            [cellController.target performSelector:cellController.action];
+        } else if ([signature isEqual:senderSignature]) {
+            [cellController.target performSelector:cellController.action withObject:cellController];
+        } else if ([signature isEqual:senderIndexPathSignature]) {
+            [cellController.target performSelector:cellController.action withObject:cellController withObject:indexPath];
+        } else {
+            NSAssert(NO, @"selector (%@) is not a valid action signature", NSStringFromSelector(cellController.action));
+        }
+#pragma clang diagnostic pop
+    }
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    CLLTableViewSectionController *sectionController = self.sectionControllers[section];
+    return sectionController.sectionTitle;
+}
+
+
+- (void)selectTableViewCellNoArgumentSelector
+{
+    // Intentionally empty. Used for determining which version of perform selector we should use in
+    // ‑tableView:didSelectRowAtIndexPath:.
+}
+
+
+- (void)selectTableViewCellSenderSelector:(id)sender
+{
+    // Intentionally empty. Used for determining which version of perform selector we should use in
+    // ‑tableView:didSelectRowAtIndexPath:.
+}
+
+
+- (void)selectTableViewCellSender:(id)sender indexPathSelector:(NSIndexPath *)indexPath
+{
+    // Intentionally empty. Used for determining which version of perform selector we should use in
+    // ‑tableView:didSelectRowAtIndexPath:.
+}
+
+
+#pragma mark - Table View Cell Controller Delegate
+
+- (void)cellControllerRequiresReload:(CLLTableViewCellController *)cellController
+{
+    [self.tableView reloadRowsAtIndexPaths:@[ [self indexPathForCellController:cellController] ]
+                          withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
+- (void)cellControllerRequiresAnimatedHeightChange:(CLLTableViewCellController *)cellController
+{
+    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+    } completion:nil];
+}
+
 @end

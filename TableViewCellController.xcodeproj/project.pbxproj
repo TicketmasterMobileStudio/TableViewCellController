@@ -14,9 +14,8 @@
 		1380064C1B715627003E958A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 138006401B715627003E958A /* LaunchScreen.xib */; };
 		1380064D1B715627003E958A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 138006421B715627003E958A /* Main.storyboard */; };
 		1380064E1B715627003E958A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 138006441B715627003E958A /* Images.xcassets */; };
-		1380064F1B715627003E958A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 138006461B715627003E958A /* Info.plist */; };
 		138006501B715627003E958A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 138006471B715627003E958A /* main.m */; };
-		138006511B715627003E958A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1380064A1B715627003E958A /* ViewController.m */; };
+		138006511B715627003E958A /* CLLExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1380064A1B715627003E958A /* CLLExampleViewController.m */; };
 		138006521B71564C003E958A /* TableViewCellController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 138005F71B7153D6003E958A /* TableViewCellController.framework */; };
 		13CED2461B79431000D6A833 /* CLLTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 13CED2441B79431000D6A833 /* CLLTableViewController.h */; };
 		13CED2471B79431000D6A833 /* CLLTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CED2451B79431000D6A833 /* CLLTableViewController.m */; };
@@ -25,6 +24,7 @@
 		13CED24E1B79435900D6A833 /* CLLTableViewCellController.h in Headers */ = {isa = PBXBuildFile; fileRef = 13CED24C1B79435900D6A833 /* CLLTableViewCellController.h */; };
 		13CED24F1B79435900D6A833 /* CLLTableViewCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CED24D1B79435900D6A833 /* CLLTableViewCellController.m */; };
 		13CED2511B7A969000D6A833 /* CLLTableViewCellControllerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 13CED2501B7A969000D6A833 /* CLLTableViewCellControllerDelegate.h */; };
+		71A7B5851C8795F700660834 /* CLLColorCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A7B5841C8795F700660834 /* CLLColorCellController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,8 +52,8 @@
 		138006441B715627003E958A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		138006461B715627003E958A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		138006471B715627003E958A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		138006491B715627003E958A /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		1380064A1B715627003E958A /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		138006491B715627003E958A /* CLLExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLExampleViewController.h; sourceTree = "<group>"; };
+		1380064A1B715627003E958A /* CLLExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLExampleViewController.m; sourceTree = "<group>"; };
 		13CED2441B79431000D6A833 /* CLLTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLTableViewController.h; sourceTree = "<group>"; };
 		13CED2451B79431000D6A833 /* CLLTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLTableViewController.m; sourceTree = "<group>"; };
 		13CED2481B79434700D6A833 /* CLLTableViewSectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLTableViewSectionController.h; sourceTree = "<group>"; };
@@ -61,6 +61,8 @@
 		13CED24C1B79435900D6A833 /* CLLTableViewCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLTableViewCellController.h; sourceTree = "<group>"; };
 		13CED24D1B79435900D6A833 /* CLLTableViewCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLTableViewCellController.m; sourceTree = "<group>"; };
 		13CED2501B7A969000D6A833 /* CLLTableViewCellControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLTableViewCellControllerDelegate.h; sourceTree = "<group>"; };
+		71A7B5831C8795F700660834 /* CLLColorCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLColorCellController.h; sourceTree = "<group>"; };
+		71A7B5841C8795F700660834 /* CLLColorCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLColorCellController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				1380063D1B715627003E958A /* Application */,
+				71A7B5811C8795C400660834 /* Section Controllers */,
 				138006481B715627003E958A /* View Controllers */,
 			);
 			path = TableViewCellControllerExample;
@@ -185,10 +188,27 @@
 		138006481B715627003E958A /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				138006491B715627003E958A /* ViewController.h */,
-				1380064A1B715627003E958A /* ViewController.m */,
+				138006491B715627003E958A /* CLLExampleViewController.h */,
+				1380064A1B715627003E958A /* CLLExampleViewController.m */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		71A7B5811C8795C400660834 /* Section Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				71A7B5821C8795D500660834 /* Color Cell Controller */,
+			);
+			path = "Section Controllers";
+			sourceTree = "<group>";
+		};
+		71A7B5821C8795D500660834 /* Color Cell Controller */ = {
+			isa = PBXGroup;
+			children = (
+				71A7B5831C8795F700660834 /* CLLColorCellController.h */,
+				71A7B5841C8795F700660834 /* CLLColorCellController.m */,
+			);
+			path = "Color Cell Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,7 +341,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1380064F1B715627003E958A /* Info.plist in Resources */,
 				1380064E1B715627003E958A /* Images.xcassets in Resources */,
 				1380064C1B715627003E958A /* LaunchScreen.xib in Resources */,
 				1380064D1B715627003E958A /* Main.storyboard in Resources */,
@@ -353,7 +372,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				138006511B715627003E958A /* ViewController.m in Sources */,
+				138006511B715627003E958A /* CLLExampleViewController.m in Sources */,
+				71A7B5851C8795F700660834 /* CLLColorCellController.m in Sources */,
 				138006501B715627003E958A /* main.m in Sources */,
 				1380064B1B715627003E958A /* AppDelegate.m in Sources */,
 			);

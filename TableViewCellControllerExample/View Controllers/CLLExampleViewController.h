@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CLLTableViewController.h"
 
-@interface ViewController : UIViewController
 
+@interface CLLExampleViewController : CLLTableViewController
 
 @end
 
