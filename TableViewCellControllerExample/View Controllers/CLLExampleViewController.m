@@ -23,7 +23,35 @@
 {
     [super viewDidLoad];
 
-    NSUInteger limit = 5;
+    self.sectionControllers = @[ [self newPrototypeSection], [self newColorSection] ];
+}
+
+
+#pragma mark - Actions
+
+- (IBAction)addSectionController
+{
+    self.sectionControllers = [self.sectionControllers arrayByAddingObject:[self newColorSection]];
+}
+
+
+- (IBAction)removeSectionController
+{
+    if (self.sectionControllers.count == 0) {
+        return;
+    }
+
+    NSMutableArray *newSectionControllers = [self.sectionControllers mutableCopy];
+    [newSectionControllers removeLastObject];
+    self.sectionControllers = newSectionControllers;
+}
+
+
+#pragma mark - Helpers
+
+- (CLLTableViewSectionController *)newColorSection
+{
+    NSUInteger limit = random() % 6;
 
     NSMutableArray *cellControllers = [[NSMutableArray alloc] initWithCapacity:limit];
     for (NSUInteger i = 0; i < limit; i++) {
@@ -32,20 +60,17 @@
         [cellControllers addObject:cellController];
     }
 
-    CLLTableViewSectionController *sectionController1 = [[CLLTableViewSectionController alloc] initWithCellControllers:cellControllers sectionTitle:@"Colors 1"];
+    static NSUInteger sectionNumber = 0;
+    sectionNumber++;
+    NSString *sectionTitle = [NSString stringWithFormat:@"Colors %lu", (unsigned long)sectionNumber];
 
-    limit = 3;
-    cellControllers = [[NSMutableArray alloc] initWithCapacity:limit];
-    for (NSUInteger i = 0; i < limit; i++) {
-        CLLColorCellController *cellController = [[CLLColorCellController alloc] init];
-        cellController.color = [self nextColor];
-        [cellControllers addObject:cellController];
-    }
-    CLLTableViewSectionController *sectionController2 = [[CLLTableViewSectionController alloc] initWithCellControllers:cellControllers sectionTitle:@"Colors 2"];
+    return [[CLLTableViewSectionController alloc] initWithCellControllers:cellControllers sectionTitle:sectionTitle];
+}
 
-    CLLTableViewSectionController *sectionController3 = [[CLLTableViewSectionController alloc] initWithCellControllers:@[ [[CLLPrototypeCellController alloc] init] ] sectionTitle:@"Prototypes"];
 
-    self.sectionControllers = @[ sectionController1, sectionController2, sectionController3 ];
+- (CLLTableViewSectionController *)newPrototypeSection
+{
+    return [[CLLTableViewSectionController alloc] initWithCellControllers:@[ [[CLLPrototypeCellController alloc] init] ] sectionTitle:@"Prototypes"];
 }
 
 
@@ -73,6 +98,5 @@
 
     return rainbow[counter++];
 }
-
 
 @end

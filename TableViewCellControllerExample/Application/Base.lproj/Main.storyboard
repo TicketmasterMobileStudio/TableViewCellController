@@ -18,16 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w8p-Yo-lRd">
-                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <items>
-                                    <tabBarItem systemItem="favorites" id="Vmb-Gc-dSN"/>
-                                    <tabBarItem systemItem="more" id="FVv-fm-TJt"/>
-                                </items>
-                            </tabBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="Vqg-hN-oPp">
-                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="515"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CLLPrototypeCell" id="c36-hJ-3ic">
@@ -53,18 +45,46 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQ3-so-s3d" userLabel="ButtonView">
+                                <rect key="frame" x="0.0" y="535" width="600" height="65"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GEd-Kj-ZN4">
+                                        <rect key="frame" x="16" y="18" width="41" height="30"/>
+                                        <state key="normal" title="Add S"/>
+                                        <connections>
+                                            <action selector="addSectionController" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gHk-tt-1Ko"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K80-aH-KQu">
+                                        <rect key="frame" x="73" y="18" width="58" height="30"/>
+                                        <state key="normal" title="Delete S"/>
+                                        <connections>
+                                            <action selector="removeSectionController" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dgM-cp-zUV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="3ki-TZ-fAC"/>
+                                    <constraint firstItem="K80-aH-KQu" firstAttribute="leading" secondItem="GEd-Kj-ZN4" secondAttribute="trailing" constant="16" id="CJe-Ar-g7p"/>
+                                    <constraint firstItem="GEd-Kj-ZN4" firstAttribute="centerY" secondItem="dQ3-so-s3d" secondAttribute="centerY" id="Ml2-rY-FcP"/>
+                                    <constraint firstItem="GEd-Kj-ZN4" firstAttribute="leading" secondItem="dQ3-so-s3d" secondAttribute="leading" constant="16" id="P0B-1E-Rru"/>
+                                    <constraint firstItem="K80-aH-KQu" firstAttribute="centerY" secondItem="dQ3-so-s3d" secondAttribute="centerY" id="zXz-y7-z8k"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="w8p-Yo-lRd" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-20" id="Uk9-nP-gGw"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="dQ3-so-s3d" secondAttribute="bottom" id="BBe-1i-Y90"/>
                             <constraint firstItem="Vqg-hN-oPp" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-20" id="W6i-KQ-vZk"/>
-                            <constraint firstItem="w8p-Yo-lRd" firstAttribute="top" secondItem="Vqg-hN-oPp" secondAttribute="bottom" id="dQz-AH-oJp"/>
+                            <constraint firstAttribute="trailing" secondItem="dQ3-so-s3d" secondAttribute="trailing" id="Xsm-D9-OhQ"/>
+                            <constraint firstItem="dQ3-so-s3d" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Y3w-Ia-tav"/>
+                            <constraint firstItem="dQ3-so-s3d" firstAttribute="top" secondItem="Vqg-hN-oPp" secondAttribute="bottom" id="Y5Z-Kr-qDa"/>
                             <constraint firstItem="Vqg-hN-oPp" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="hhK-jk-0wh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Vqg-hN-oPp" secondAttribute="trailing" constant="-20" id="teg-PI-W2b"/>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="w8p-Yo-lRd" secondAttribute="bottom" id="waG-hi-jMF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="w8p-Yo-lRd" secondAttribute="trailing" constant="-20" id="xDa-Mm-V2L"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
                     <connections>
                         <outlet property="tableView" destination="Vqg-hN-oPp" id="TyM-Hh-gcT"/>
                     </connections>
