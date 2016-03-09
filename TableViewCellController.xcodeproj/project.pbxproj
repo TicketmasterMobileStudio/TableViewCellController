@@ -24,6 +24,9 @@
 		13CED24E1B79435900D6A833 /* CLLTableViewCellController.h in Headers */ = {isa = PBXBuildFile; fileRef = 13CED24C1B79435900D6A833 /* CLLTableViewCellController.h */; };
 		13CED24F1B79435900D6A833 /* CLLTableViewCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CED24D1B79435900D6A833 /* CLLTableViewCellController.m */; };
 		13CED2511B7A969000D6A833 /* CLLTableViewCellControllerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 13CED2501B7A969000D6A833 /* CLLTableViewCellControllerDelegate.h */; };
+		71846DDC1C8F75E100FC443F /* CLLPrototypeCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71846DDB1C8F75E100FC443F /* CLLPrototypeCellController.m */; };
+		71846DDD1C8F7E7E00FC443F /* TableViewCellController.framework in Resources */ = {isa = PBXBuildFile; fileRef = 138005F71B7153D6003E958A /* TableViewCellController.framework */; };
+		71846DDF1C8F7EC400FC443F /* TableViewCellController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 138005F71B7153D6003E958A /* TableViewCellController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		71A7B5851C8795F700660834 /* CLLColorCellController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71A7B5841C8795F700660834 /* CLLColorCellController.m */; };
 /* End PBXBuildFile section */
 
@@ -35,7 +38,28 @@
 			remoteGlobalIDString = 138005F61B7153D6003E958A;
 			remoteInfo = TableViewCellController;
 		};
+		71846DE01C8F7EC400FC443F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 138005EE1B7153D6003E958A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 138005F61B7153D6003E958A;
+			remoteInfo = TableViewCellController;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		71846DE21C8F7EC400FC443F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				71846DDF1C8F7EC400FC443F /* TableViewCellController.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		138005F71B7153D6003E958A /* TableViewCellController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableViewCellController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +85,8 @@
 		13CED24C1B79435900D6A833 /* CLLTableViewCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLTableViewCellController.h; sourceTree = "<group>"; };
 		13CED24D1B79435900D6A833 /* CLLTableViewCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLTableViewCellController.m; sourceTree = "<group>"; };
 		13CED2501B7A969000D6A833 /* CLLTableViewCellControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLTableViewCellControllerDelegate.h; sourceTree = "<group>"; };
+		71846DDA1C8F75E100FC443F /* CLLPrototypeCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLPrototypeCellController.h; sourceTree = "<group>"; };
+		71846DDB1C8F75E100FC443F /* CLLPrototypeCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLPrototypeCellController.m; sourceTree = "<group>"; };
 		71A7B5831C8795F700660834 /* CLLColorCellController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLLColorCellController.h; sourceTree = "<group>"; };
 		71A7B5841C8795F700660834 /* CLLColorCellController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLLColorCellController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,10 +220,20 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
+		71846DD91C8F75B600FC443F /* Prototype Cell Controller */ = {
+			isa = PBXGroup;
+			children = (
+				71846DDA1C8F75E100FC443F /* CLLPrototypeCellController.h */,
+				71846DDB1C8F75E100FC443F /* CLLPrototypeCellController.m */,
+			);
+			path = "Prototype Cell Controller";
+			sourceTree = "<group>";
+		};
 		71A7B5811C8795C400660834 /* Section Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				71A7B5821C8795D500660834 /* Color Cell Controller */,
+				71846DD91C8F75B600FC443F /* Prototype Cell Controller */,
 			);
 			path = "Section Controllers";
 			sourceTree = "<group>";
@@ -272,10 +308,12 @@
 				138006131B715522003E958A /* Sources */,
 				138006141B715522003E958A /* Frameworks */,
 				138006151B715522003E958A /* Resources */,
+				71846DE21C8F7EC400FC443F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				71846DE11C8F7EC400FC443F /* PBXTargetDependency */,
 			);
 			name = TableViewCellControllerExample;
 			productName = TableViewCellControllerExample;
@@ -341,6 +379,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71846DDD1C8F7E7E00FC443F /* TableViewCellController.framework in Resources */,
 				1380064E1B715627003E958A /* Images.xcassets in Resources */,
 				1380064C1B715627003E958A /* LaunchScreen.xib in Resources */,
 				1380064D1B715627003E958A /* Main.storyboard in Resources */,
@@ -374,6 +413,7 @@
 			files = (
 				138006511B715627003E958A /* CLLExampleViewController.m in Sources */,
 				71A7B5851C8795F700660834 /* CLLColorCellController.m in Sources */,
+				71846DDC1C8F75E100FC443F /* CLLPrototypeCellController.m in Sources */,
 				138006501B715627003E958A /* main.m in Sources */,
 				1380064B1B715627003E958A /* AppDelegate.m in Sources */,
 			);
@@ -386,6 +426,11 @@
 			isa = PBXTargetDependency;
 			target = 138005F61B7153D6003E958A /* TableViewCellController */;
 			targetProxy = 138006041B7153D6003E958A /* PBXContainerItemProxy */;
+		};
+		71846DE11C8F7EC400FC443F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 138005F61B7153D6003E958A /* TableViewCellController */;
+			targetProxy = 71846DE01C8F7EC400FC443F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -583,6 +628,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ticketmaster.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -595,6 +641,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ticketmaster.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

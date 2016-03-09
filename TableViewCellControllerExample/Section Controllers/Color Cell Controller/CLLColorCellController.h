@@ -10,4 +10,10 @@
 
 @interface CLLColorCellController : CLLTableViewCellController
 
+/*! 
+ Color is a standin for the model object that this cell controller represents
+ The model object would typically be passed to the cell controller as a property. 
+ */
+@property (nonatomic, strong) UIColor *color;
+
 @end
