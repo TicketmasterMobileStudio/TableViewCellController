@@ -29,27 +29,4 @@
  */
 - (void)cellControllerRequiresAnimatedHeightChange:(CLLTableViewCellController *)cellController;
 
-
-@optional
-
-/*!
- @abstract Invoked when the cell controller’s cell becomes first responder.
- @discussion Every effort should be made to recognize and respond to this condition. However, it may not always be
- possible. For example, if a subview of the cell becomes first responder and does not provide a mechanism for
- notifying that it has done so, the cell controller may not be able to reliably reflect the change in first
- responder status. Cell controller classes should be explicit about this.
- @param cellController The cell controller whose cell resigned first responder.
- */
-- (void)cellControllerDidBecomeFirstResponder:(CLLTableViewCellController *)cellController;
-
-/*!
- @abstract Invoked when the cell controller’s cell resigns first responder.
- @discussion Every effort should be made to recognize and respond to this condition. However, it may not always be
- possible. For example, if a subview of the cell resigns first responder and does not provide a mechanism for
- notifying that it has resigned first responder, the cell controller may not be able to reliably reflect the
- change in first responder status. Cell controller classes should be explicit about this.
- @param cellController The cell controller whose cell resigned first responder.
- */
-- (void)cellControllerDidResignFirstResponder:(CLLTableViewCellController *)cellController;
-
 @end

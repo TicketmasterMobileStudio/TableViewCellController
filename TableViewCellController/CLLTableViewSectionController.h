@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  @abstract An array of `CLLTableViewCellController` objects that define the content of the section. Defaults to an empty array.
  */
-@property (nonatomic, copy) NSArray *cellControllers;
+@property (nonatomic, copy, readonly) NSArray<CLLTableViewCellController *> *cellControllers;
 
 /*!
  @abstract Initializes the section controller with the specified array of cell controllers.

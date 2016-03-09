@@ -41,19 +41,4 @@
     return self;
 }
 
-
-- (void)setCellControllers:(NSArray *)cellControllers
-{
-    // TODO: the below is a temporary measure to address tableview insert/delete issues with cell controllers
-    // clean up old cell controllers, since they might not be properly de-configured in cellDidEndDisplaying
-    NSMutableSet *removedCellControllers = [NSMutableSet setWithArray:_cellControllers];
-    [removedCellControllers minusSet:[NSMutableSet setWithArray:cellControllers]];
-
-    for (CLLTableViewCellController *cellController in removedCellControllers) {
-        [cellController endDisplayingCell:nil inTableView:nil];
-    }
-
-    _cellControllers = [cellControllers copy];
-}
-
 @end

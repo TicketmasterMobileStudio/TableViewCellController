@@ -55,18 +55,20 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
-    NSAssert(self.sectionControllers, @"sectionControllers is not initialized");
-
-    for (CLLTableViewSectionController *sectionController in self.sectionControllers) {
-        for (CLLTableViewCellController *cellController in sectionController.cellControllers) {
-            cellController.delegate = self;
-        }
-    }
 
     [self registerTableViewCells];
 
     [self updateKeyboardNotificationObservation];
 }
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    NSAssert(self.sectionControllers, @"sectionControllers is not initialized");
+}
+
 
 
 - (void)dealloc
@@ -77,90 +79,99 @@
 
 #pragma mark - Section controllers
 
-- (NSArray *)sectionControllers
-{
-    if (!_sectionControllers) {
-        [self loadSectionControllers];
-    }
-
-    return _sectionControllers;
-}
+//- (NSArray *)sectionControllers
+//{
+//    if (!_sectionControllers) {
+//        [self loadSectionControllers];
+//    }
+//
+//    return _sectionControllers;
+//}
 
 
 - (void)setSectionControllers:(NSArray *)sectionControllers
 {
-    // TODO: the below is a temporary measure to address tableview insert/delete issues with cell controllers
-    // clean up old section controllers, since they might not be properly de-configured in cellDidEndDisplaying
+    for (CLLTableViewCellController *cellController in [self allCellControllers]) {
+            cellController.cell = nil;
+            cellController.delegate = nil;
+    }
 
-    // de-configure only the removed ones
-    NSMutableSet *removedCellControllers = [NSMutableSet set];
-    for (CLLTableViewSectionController *sectionController in _sectionControllers) {
-        [removedCellControllers addObjectsFromArray:sectionController.cellControllers];
-    }
-    NSMutableSet *newCellControllers = [NSMutableSet set];
-    for (CLLTableViewSectionController *sectionController in sectionControllers) {
-        [newCellControllers addObjectsFromArray:sectionController.cellControllers];
-    }
-    [removedCellControllers minusSet:newCellControllers];
-
-    for (CLLTableViewCellController *cellController in removedCellControllers) {
-        [cellController endDisplayingCell:nil inTableView:nil];
-    }
+    [self unregisterTableViewCells];
 
     _sectionControllers = [sectionControllers copy];
+
+    for (CLLTableViewSectionController *sectionController in _sectionControllers) {
+        for (CLLTableViewCellController *cellController in sectionController.cellControllers) {
+            cellController.delegate = self;
+        }
+    }
+
+    [self registerTableViewCells];
+
+    [self.tableView reloadData];
 }
 
-- (void)loadSectionControllers
+
+- (void)unregisterTableViewCells
 {
-}
+    NSSet<Class> *cellControllerClasses = [self cellControllerClasses];
 
+    for (Class controllerClass in cellControllerClasses) {
+        if ([controllerClass shouldAutomaticallyRegisterWithTableView]) {
+            NSString *reuseIdentifier = [controllerClass cellReuseIdentifier];
+            NSAssert(reuseIdentifier, @"Reuse identifier for %@ is nil", controllerClass);
 
-- (void)registerTableViewCells
-{
-    NSMutableDictionary *registeredReuseIdentifiers = [[NSMutableDictionary alloc] init];
-
-    for (CLLTableViewSectionController *sectionController in self.sectionControllers) {
-        for (CLLTableViewCellController *controller in sectionController.cellControllers) {
-            if ([controller shouldAutomaticallyRegisterWithTableView]) {
-                Class controllerClass = controller.class;
-                NSString *reuseIdentifier = controller.cellReuseIdentifier;
-                NSAssert(reuseIdentifier, @"Reuse identifier for %@ is nil", controllerClass);
-
-
-                Class registeredClass = [registeredReuseIdentifiers objectForKey:reuseIdentifier];
-                if (registeredClass) {
-                    NSAssert(registeredClass == controllerClass,
-                             @"Multiple cell controller classes (%@ and %@) register reuse identifier \"%@\"",
-                             registeredClass, controllerClass, reuseIdentifier);
-                    continue;
-                }
-
-                registeredReuseIdentifiers[reuseIdentifier] = controllerClass;
-
-                if (controller.cellNib) {
-                    [self.tableView registerNib:controller.cellNib forCellReuseIdentifier:reuseIdentifier];
-                } else if (controller.cellClass) {
-                    [self.tableView registerClass:controller.cellClass forCellReuseIdentifier:reuseIdentifier];
-                } else {
-                    NSAssert(NO, @"Nil cell nib and cell class for cell controller class %@", controllerClass);
-                }
-
+            if ([controllerClass cellNib]) {
+                [self.tableView registerNib:nil forCellReuseIdentifier:reuseIdentifier];
+            } else if ([controllerClass cellClass]) {
+                [self.tableView registerClass:nil forCellReuseIdentifier:reuseIdentifier];
             }
         }
     }
 }
 
-//
-//- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-//{
-//    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-//
-//    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-//        [self.tableView beginUpdates];
-//        [self.tableView endUpdates];
-//    } completion:nil];
-//}
 
+- (void)registerTableViewCells
+{
+    NSSet<Class> *cellControllerClasses = [self cellControllerClasses];
+
+    for (Class controllerClass in cellControllerClasses) {
+        if ([controllerClass shouldAutomaticallyRegisterWithTableView]) {
+            NSString *reuseIdentifier = [controllerClass cellReuseIdentifier];
+            NSAssert(reuseIdentifier, @"Reuse identifier for %@ is nil", controllerClass);
+
+            if ([controllerClass cellNib]) {
+                [self.tableView registerNib:[controllerClass cellNib] forCellReuseIdentifier:reuseIdentifier];
+            } else if ([controllerClass cellClass]) {
+                [self.tableView registerClass:[controllerClass cellClass] forCellReuseIdentifier:reuseIdentifier];
+            } else {
+                NSAssert(NO, @"Nil cell nib and cell class for cell controller class %@", controllerClass);
+            }
+        }
+    }
+}
+
+
+- (NSArray *)allCellControllers
+{
+    NSArray *controllers = [[NSArray alloc] init];
+    for (CLLTableViewSectionController *section in self.sectionControllers) {
+        controllers = [controllers arrayByAddingObjectsFromArray:section.cellControllers];
+    }
+
+    return controllers;
+}
+
+
+- (NSSet<Class> *)cellControllerClasses
+{
+    NSMutableSet *cellControllerClasses = [[NSMutableSet alloc] init];
+    for (CLLTableViewCellController *cellController in [self allCellControllers]) {
+        [cellControllerClasses addObject:[cellController class]];
+    }
+
+    return cellControllerClasses;
+}
 
 
 #pragma mark - Keyboard adjustment
@@ -261,24 +272,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellController.cellReuseIdentifier forIndexPath:indexPath];
-    [cellController configureCell:cell];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[cellController.class cellReuseIdentifier] forIndexPath:indexPath];
+    cellController.cell = cell;
     return cell;
 }
 
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
-    [cellController beginDisplayingCell:cell inTableView:tableView];
-}
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+//    [cellController beginDisplayingCell:cell inTableView:tableView];
+//}
 
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
     if (cellController.cell == cell) {
-        [cellController endDisplayingCell:cell inTableView:tableView];
+        cellController.cell = nil;
+//        [cellController endDisplayingCell:cell inTableView:tableView];
     }
 }
 
