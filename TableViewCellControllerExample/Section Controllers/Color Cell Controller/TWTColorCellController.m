@@ -1,8 +1,8 @@
 //
-//  TableViewCellControllerTests.m
-//  TableViewCellControllerTests
+//  TWTColorCellController.m
+//  TableViewCellController
 //
-//  Created by Duncan Lewis on 8/4/15.
+//  Created by Jill Cohen on 3/2/16.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,35 +24,43 @@
 //  THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import <XCTest/XCTest.h>
+#import "TWTColorCellController.h"
 
-@interface TableViewCellControllerTests : XCTestCase
 
-@end
+@implementation TWTColorCellController
 
-@implementation TableViewCellControllerTests
-
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+- (NSString *)cellReuseIdentifier
+{
+    return NSStringFromClass(self.class);
 }
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+
+- (void)configureCell:(UITableViewCell *)cell
+{
+    [super configureCell:cell];
+    
+    cell.backgroundColor = [self randomColor];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+
+- (UIColor *)randomColor
+{
+    CGFloat hue = (arc4random() % 256 / 255.0);              // 0.0 to 1.0
+    CGFloat saturation = (arc4random() % 128 / 255.0) + 0.5; // 0.5 to 1.0, away from white
+    CGFloat brightness = (arc4random() % 128 / 255.0) + 0.3; // 0.3 to 0.8, away from black
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+
+- (Class)cellClass
+{
+    return [UITableViewCell class];
+}
+
+
+-(CGFloat)cellHeightForWidth:(CGFloat)width
+{
+    return 75;
 }
 
 @end

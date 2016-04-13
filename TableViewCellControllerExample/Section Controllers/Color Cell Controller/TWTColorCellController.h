@@ -1,8 +1,8 @@
 //
-//  TableViewCellControllerTests.m
-//  TableViewCellControllerTests
+//  TWTColorCellController.h
+//  TableViewCellController
 //
-//  Created by Duncan Lewis on 8/4/15.
+//  Created by Jill Cohen on 3/2/16.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,35 +24,8 @@
 //  THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import <XCTest/XCTest.h>
+#import "TWTTableViewCellController.h"
 
-@interface TableViewCellControllerTests : XCTestCase
-
-@end
-
-@implementation TableViewCellControllerTests
-
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
+@interface TWTColorCellController : TWTTableViewCellController
 
 @end

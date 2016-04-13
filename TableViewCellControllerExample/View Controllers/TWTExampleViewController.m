@@ -1,6 +1,6 @@
 //
-//  TableViewCellControllerTests.m
-//  TableViewCellControllerTests
+//  ViewController.m
+//  TableViewCellControllerExample
 //
 //  Created by Duncan Lewis on 8/4/15.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
@@ -24,35 +24,36 @@
 //  THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import <XCTest/XCTest.h>
+#import "TWTExampleViewController.h"
 
-@interface TableViewCellControllerTests : XCTestCase
+#import "TWTColorCellController.h"
+
+
+@interface TWTExampleViewController ()
 
 @end
 
-@implementation TableViewCellControllerTests
+@implementation TWTExampleViewController
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
 }
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
+- (void)loadSectionControllers
+{
+    NSUInteger limit = 5;
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
-}
+    NSMutableArray *cellControllers = [[NSMutableArray alloc] initWithCapacity:limit];
+    for (NSUInteger i = 0; i < limit; i++) {
+        TWTColorCellController *cellController = [[TWTColorCellController alloc] init];
+        [cellControllers addObject:cellController];
+    }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+    TWTTableViewSectionController *sectionController = [[TWTTableViewSectionController alloc] initWithCellControllers:cellControllers sectionTitle:@"Colors"];
+
+    self.sectionControllers = @[ sectionController ];
 }
 
 @end

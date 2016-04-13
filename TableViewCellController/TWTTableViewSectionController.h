@@ -1,8 +1,8 @@
 //
-//  TableViewCellControllerTests.m
-//  TableViewCellControllerTests
+//  TWTTableViewSectionController.h
+//  TableViewCellController
 //
-//  Created by Duncan Lewis on 8/4/15.
+//  Created by Duncan Lewis on 8/10/15.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,35 +24,36 @@
 //  THE SOFTWARE.
 //
 
-#import <UIKit/UIKit.h>
-#import <XCTest/XCTest.h>
+@import Foundation;
 
-@interface TableViewCellControllerTests : XCTestCase
+
+@class TWTTableViewCellController;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TWTTableViewSectionController : NSObject
+
+/*!
+ @abstract The title of the section. Generally speaking, it is up to the class managing the section controller to display the
+    section title. Defaults to an empty string.
+ */
+@property (nonatomic, copy) NSString *sectionTitle;
+
+/*!
+ @abstract An array of `TWTTableViewCellController` objects that define the content of the section. Defaults to an empty array.
+ */
+@property (nonatomic, copy) NSArray *cellControllers;
+
+/*!
+ @abstract Initializes the section controller with the specified array of cell controllers.
+ */
+- (instancetype)initWithCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers NS_DESIGNATED_INITIALIZER;
+
+/*!
+ @abstract Initializes the section controller with the specified array of cell controllers and section title.
+ */
+- (instancetype)initWithCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle;
 
 @end
 
-@implementation TableViewCellControllerTests
-
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
-
-@end
+NS_ASSUME_NONNULL_END
