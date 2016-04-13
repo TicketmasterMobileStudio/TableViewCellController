@@ -1,5 +1,5 @@
 //
-//  CLLColorCellController.m
+//  TWTColorCellController.m
 //  TableViewCellController
 //
 //  Created by Jill Cohen on 3/2/16.
@@ -24,10 +24,10 @@
 //  THE SOFTWARE.
 //
 
-#import "CLLColorCellController.h"
+#import "TWTColorCellController.h"
 
 
-@implementation CLLColorCellController
+@implementation TWTColorCellController
 
 - (NSString *)cellReuseIdentifier
 {

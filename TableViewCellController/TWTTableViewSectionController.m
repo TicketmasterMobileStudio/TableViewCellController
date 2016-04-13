@@ -1,5 +1,5 @@
 //
-//  CLLTableViewSectionController.m
+//  TWTTableViewSectionController.m
 //  TableViewCellController
 //
 //  Created by Duncan Lewis on 8/10/15.
@@ -24,12 +24,12 @@
 //  THE SOFTWARE.
 //
 
-#import "CLLTableViewSectionController.h"
+#import "TWTTableViewSectionController.h"
 
-#import "CLLTableViewCellController.h"
+#import "TWTTableViewCellController.h"
 
 
-@implementation CLLTableViewSectionController
+@implementation TWTTableViewSectionController
 
 - (instancetype)init
 {
@@ -51,7 +51,7 @@
 }
 
 
-- (instancetype)initWithCellControllers:(NSArray<CLLTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle
+- (instancetype)initWithCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle
 {
     self = [self initWithCellControllers:cellControllers];
     self.sectionTitle = sectionTitle;
@@ -67,7 +67,7 @@
     NSMutableSet *removedCellControllers = [NSMutableSet setWithArray:_cellControllers];
     [removedCellControllers minusSet:[NSMutableSet setWithArray:cellControllers]];
 
-    for (CLLTableViewCellController *cellController in removedCellControllers) {
+    for (TWTTableViewCellController *cellController in removedCellControllers) {
         [cellController endDisplayingCell:nil inTableView:nil];
     }
 

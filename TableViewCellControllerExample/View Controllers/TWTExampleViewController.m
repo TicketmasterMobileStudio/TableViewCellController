@@ -1,8 +1,8 @@
 //
-//  CLLColorCellController.h
-//  TableViewCellController
+//  ViewController.m
+//  TableViewCellControllerExample
 //
-//  Created by Jill Cohen on 3/2/16.
+//  Created by Duncan Lewis on 8/4/15.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,8 +24,36 @@
 //  THE SOFTWARE.
 //
 
-#import "CLLTableViewCellController.h"
+#import "TWTExampleViewController.h"
 
-@interface CLLColorCellController : CLLTableViewCellController
+#import "TWTColorCellController.h"
+
+
+@interface TWTExampleViewController ()
+
+@end
+
+@implementation TWTExampleViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)loadSectionControllers
+{
+    NSUInteger limit = 5;
+
+    NSMutableArray *cellControllers = [[NSMutableArray alloc] initWithCapacity:limit];
+    for (NSUInteger i = 0; i < limit; i++) {
+        TWTColorCellController *cellController = [[TWTColorCellController alloc] init];
+        [cellControllers addObject:cellController];
+    }
+
+    TWTTableViewSectionController *sectionController = [[TWTTableViewSectionController alloc] initWithCellControllers:cellControllers sectionTitle:@"Colors"];
+
+    self.sectionControllers = @[ sectionController ];
+}
 
 @end

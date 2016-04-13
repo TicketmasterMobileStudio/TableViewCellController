@@ -288,6 +288,7 @@
 		138005EE1B7153D6003E958A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = TWT;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Ticketmaster Entertainment, Inc.";
 				TargetAttributes = {

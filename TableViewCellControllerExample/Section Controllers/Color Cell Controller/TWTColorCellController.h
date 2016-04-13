@@ -1,8 +1,8 @@
 //
-//  ViewController.h
-//  TableViewCellControllerExample
+//  TWTColorCellController.h
+//  TableViewCellController
 //
-//  Created by Duncan Lewis on 8/4/15.
+//  Created by Jill Cohen on 3/2/16.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,10 +24,8 @@
 //  THE SOFTWARE.
 //
 
-#import "CLLTableViewController.h"
+#import "TWTTableViewCellController.h"
 
-
-@interface CLLExampleViewController : CLLTableViewController
+@interface TWTColorCellController : TWTTableViewCellController
 
 @end
-

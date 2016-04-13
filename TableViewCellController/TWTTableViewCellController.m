@@ -1,5 +1,5 @@
 //
-//  CLLTableViewCellController.m
+//  TWTTableViewCellController.m
 //  TableViewCellController
 //
 //  Created by Duncan Lewis on 8/10/15.
@@ -24,12 +24,12 @@
 //  THE SOFTWARE.
 //
 
-#import "CLLTableViewCellController.h"
+#import "TWTTableViewCellController.h"
 
-#import "CLLTableViewCellControllerDelegate.h"
+#import "TWTTableViewCellControllerDelegate.h"
 
 
-@interface CLLTableViewCellController ()
+@interface TWTTableViewCellController ()
 
 @property (nonatomic, weak, readwrite) UITableView *tableView;
 @property (nonatomic, weak, readwrite) UITableViewCell *cell;
@@ -38,7 +38,7 @@
 @end
 
 
-@implementation CLLTableViewCellController
+@implementation TWTTableViewCellController
 
 - (NSString *)cellReuseIdentifier
 {

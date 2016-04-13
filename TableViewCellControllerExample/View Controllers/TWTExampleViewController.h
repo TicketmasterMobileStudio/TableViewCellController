@@ -1,8 +1,8 @@
 //
-//  CLLTableViewSectionController.h
-//  TableViewCellController
+//  ViewController.h
+//  TableViewCellControllerExample
 //
-//  Created by Duncan Lewis on 8/10/15.
+//  Created by Duncan Lewis on 8/4/15.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,36 +24,10 @@
 //  THE SOFTWARE.
 //
 
-@import Foundation;
+#import "TWTTableViewController.h"
 
 
-@class CLLTableViewCellController;
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface CLLTableViewSectionController : NSObject
-
-/*!
- @abstract The title of the section. Generally speaking, it is up to the class managing the section controller to display the
-    section title. Defaults to an empty string.
- */
-@property (nonatomic, copy) NSString *sectionTitle;
-
-/*!
- @abstract An array of `CLLTableViewCellController` objects that define the content of the section. Defaults to an empty array.
- */
-@property (nonatomic, copy) NSArray *cellControllers;
-
-/*!
- @abstract Initializes the section controller with the specified array of cell controllers.
- */
-- (instancetype)initWithCellControllers:(NSArray<CLLTableViewCellController *> *)cellControllers NS_DESIGNATED_INITIALIZER;
-
-/*!
- @abstract Initializes the section controller with the specified array of cell controllers and section title.
- */
-- (instancetype)initWithCellControllers:(NSArray<CLLTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle;
+@interface TWTExampleViewController : TWTTableViewController
 
 @end
 
-NS_ASSUME_NONNULL_END

@@ -1,5 +1,5 @@
 //
-//  CLLTableViewCellController.h
+//  TWTTableViewCellController.h
 //  TableViewCellController
 //
 //  Created by Duncan Lewis on 8/10/15.
@@ -27,11 +27,11 @@
 @import UIKit;
 
 
-@protocol CLLTableViewCellControllerDelegate;
+@protocol TWTTableViewCellControllerDelegate;
 
 
 /*!
- CLLTableViewCellController is an abstract class that collects data and behavior that is necessary to control an individual table
+ TWTTableViewCellController is an abstract class that collects data and behavior that is necessary to control an individual table
  view cell.
  
  Subclasses must override the following methods:
@@ -41,10 +41,10 @@
     * -cellHeightForWidth:
     * One of -cellNib or -cellClass, if shouldAutomaticallyRegisterWithTableView returns YES.
  */
-@interface CLLTableViewCellController : NSObject
+@interface TWTTableViewCellController : NSObject
 
 /*! The cell controller’s delegate. */
-@property (nonatomic, weak) id<CLLTableViewCellControllerDelegate> delegate;
+@property (nonatomic, weak) id<TWTTableViewCellControllerDelegate> delegate;
 
 /*!
  @abstract The cell reuse identifier for the cell controller.
