@@ -1,17 +1,17 @@
 //
-//  CLLTableViewSectionController.m
+//  TWTTableViewSectionController.m
 //  TableViewCellController
 //
 //  Created by Duncan Lewis on 8/10/15.
 //  Copyright © 2015 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 
-#import "CLLTableViewSectionController.h"
+#import "TWTTableViewSectionController.h"
 
-#import "CLLTableViewCellController.h"
+#import "TWTTableViewCellController.h"
 
 
-@implementation CLLTableViewSectionController
+@implementation TWTTableViewSectionController
 
 - (instancetype)init
 {
@@ -33,7 +33,7 @@
 }
 
 
-- (instancetype)initWithCellControllers:(NSArray<CLLTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle
+- (instancetype)initWithCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle
 {
     self = [self initWithCellControllers:cellControllers];
     self.sectionTitle = sectionTitle;

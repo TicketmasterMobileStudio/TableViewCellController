@@ -6,18 +6,18 @@
 //  Copyright (c) 2015 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 
-#import "CLLExampleViewController.h"
+#import "TWTExampleViewController.h"
 
-#import "CLLColorCellController.h"
-#import "CLLPrototypeCellController.h"
+#import "TWTColorCellController.h"
+#import "TWTPrototypeCellController.h"
 
 
-@interface CLLExampleViewController ()
+@interface TWTExampleViewController ()
 
 @end
 
 
-@implementation CLLExampleViewController
+@implementation TWTExampleViewController
 
 - (void)viewDidLoad
 {
@@ -49,13 +49,13 @@
 
 #pragma mark - Helpers
 
-- (CLLTableViewSectionController *)newColorSection
+- (TWTTableViewSectionController *)newColorSection
 {
     NSUInteger limit = random() % 6;
 
     NSMutableArray *cellControllers = [[NSMutableArray alloc] initWithCapacity:limit];
     for (NSUInteger i = 0; i < limit; i++) {
-        CLLColorCellController *cellController = [[CLLColorCellController alloc] init];
+        TWTColorCellController *cellController = [[TWTColorCellController alloc] init];
         cellController.color = [self nextColor];
         [cellControllers addObject:cellController];
     }
@@ -64,13 +64,13 @@
     sectionNumber++;
     NSString *sectionTitle = [NSString stringWithFormat:@"Colors %lu", (unsigned long)sectionNumber];
 
-    return [[CLLTableViewSectionController alloc] initWithCellControllers:cellControllers sectionTitle:sectionTitle];
+    return [[TWTTableViewSectionController alloc] initWithCellControllers:cellControllers sectionTitle:sectionTitle];
 }
 
 
-- (CLLTableViewSectionController *)newPrototypeSection
+- (TWTTableViewSectionController *)newPrototypeSection
 {
-    return [[CLLTableViewSectionController alloc] initWithCellControllers:@[ [[CLLPrototypeCellController alloc] init] ] sectionTitle:@"Prototypes"];
+    return [[TWTTableViewSectionController alloc] initWithCellControllers:@[ [[TWTPrototypeCellController alloc] init] ] sectionTitle:@"Prototypes"];
 }
 
 

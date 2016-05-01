@@ -1,20 +1,20 @@
 //
-//  CLLTableViewController.m
+//  TWTTableViewController.m
 //  TableViewCellController
 //
 //  Created by Duncan Lewis on 8/10/15.
 //  Copyright © 2015 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 
-#import "CLLTableViewController.h"
+#import "TWTTableViewController.h"
 
 
-@interface CLLTableViewController ()
+@interface TWTTableViewController ()
 
 @end
 
 
-@implementation CLLTableViewController
+@implementation TWTTableViewController
 
 @synthesize sectionControllers = _sectionControllers;
 
@@ -91,7 +91,7 @@
 
 - (void)setSectionControllers:(NSArray *)sectionControllers
 {
-    for (CLLTableViewCellController *cellController in [self allCellControllers]) {
+    for (TWTTableViewCellController *cellController in [self allCellControllers]) {
             cellController.cell = nil;
             cellController.delegate = nil;
     }
@@ -100,8 +100,8 @@
 
     _sectionControllers = [sectionControllers copy];
 
-    for (CLLTableViewSectionController *sectionController in _sectionControllers) {
-        for (CLLTableViewCellController *cellController in sectionController.cellControllers) {
+    for (TWTTableViewSectionController *sectionController in _sectionControllers) {
+        for (TWTTableViewCellController *cellController in sectionController.cellControllers) {
             cellController.delegate = self;
         }
     }
@@ -155,7 +155,7 @@
 - (NSArray *)allCellControllers
 {
     NSArray *controllers = [[NSArray alloc] init];
-    for (CLLTableViewSectionController *section in self.sectionControllers) {
+    for (TWTTableViewSectionController *section in self.sectionControllers) {
         controllers = [controllers arrayByAddingObjectsFromArray:section.cellControllers];
     }
 
@@ -166,7 +166,7 @@
 - (NSSet<Class> *)cellControllerClasses
 {
     NSMutableSet *cellControllerClasses = [[NSMutableSet alloc] init];
-    for (CLLTableViewCellController *cellController in [self allCellControllers]) {
+    for (TWTTableViewCellController *cellController in [self allCellControllers]) {
         [cellControllerClasses addObject:[cellController class]];
     }
 
@@ -221,10 +221,10 @@
 
 #pragma mark - Table View
 
-- (CLLTableViewCellController *)cellControllerForIndexPath:(NSIndexPath *)indexPath
+- (TWTTableViewCellController *)cellControllerForIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section < self.sectionControllers.count) {
-        CLLTableViewSectionController *sectionController = self.sectionControllers[indexPath.section];
+        TWTTableViewSectionController *sectionController = self.sectionControllers[indexPath.section];
         if (indexPath.row < sectionController.cellControllers.count) {
             return sectionController.cellControllers[indexPath.row];
         }
@@ -234,11 +234,11 @@
 }
 
 
-- (NSIndexPath *)indexPathForCellController:(CLLTableViewCellController *)cellController
+- (NSIndexPath *)indexPathForCellController:(TWTTableViewCellController *)cellController
 {
     __block NSIndexPath *indexPath = nil;
 
-    [self.sectionControllers enumerateObjectsUsingBlock:^(CLLTableViewSectionController *sectionController, NSUInteger idx, BOOL *stop) {
+    [self.sectionControllers enumerateObjectsUsingBlock:^(TWTTableViewSectionController *sectionController, NSUInteger idx, BOOL *stop) {
         NSInteger row = [sectionController.cellControllers indexOfObjectIdenticalTo:cellController];
 
         if (row != NSNotFound) {
@@ -264,14 +264,14 @@
         return 0;
     }
 
-    CLLTableViewSectionController *sectionController = self.sectionControllers[section];
+    TWTTableViewSectionController *sectionController = self.sectionControllers[section];
     return sectionController.cellControllers.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    TWTTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[cellController.class cellReuseIdentifier] forIndexPath:indexPath];
     cellController.cell = cell;
     return cell;
@@ -280,14 +280,14 @@
 
 //- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 //{
-//    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+//    TWTTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
 //    [cellController beginDisplayingCell:cell inTableView:tableView];
 //}
 
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    TWTTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
     if (cellController.cell == cell) {
         cellController.cell = nil;
 //        [cellController endDisplayingCell:cell inTableView:tableView];
@@ -297,21 +297,21 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    TWTTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
     return [cellController cellHeightForWidth:CGRectGetWidth(tableView.bounds)];
 }
 
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    TWTTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
     return cellController.target && cellController.action;
 }
 
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    TWTTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
     return cellController.target && cellController.action ? indexPath : nil;
 }
 
@@ -329,7 +329,7 @@
         senderIndexPathSignature = [self methodSignatureForSelector:@selector(selectTableViewCellSender:indexPathSelector:)];
     });
 
-    CLLTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
+    TWTTableViewCellController *cellController = [self cellControllerForIndexPath:indexPath];
     if (cellController.target && cellController.action) {
         NSMethodSignature *signature = [cellController.target methodSignatureForSelector:cellController.action];
 
@@ -351,7 +351,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    CLLTableViewSectionController *sectionController = self.sectionControllers[section];
+    TWTTableViewSectionController *sectionController = self.sectionControllers[section];
     return sectionController.sectionTitle;
 }
 
@@ -379,14 +379,14 @@
 
 #pragma mark - Table View Cell Controller Delegate
 
-- (void)cellControllerRequiresReload:(CLLTableViewCellController *)cellController
+- (void)cellControllerRequiresReload:(TWTTableViewCellController *)cellController
 {
     [self.tableView reloadRowsAtIndexPaths:@[ [self indexPathForCellController:cellController] ]
                           withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 
-- (void)cellControllerRequiresAnimatedHeightChange:(CLLTableViewCellController *)cellController
+- (void)cellControllerRequiresAnimatedHeightChange:(TWTTableViewCellController *)cellController
 {
     [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [self.tableView beginUpdates];

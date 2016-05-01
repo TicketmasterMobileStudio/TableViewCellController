@@ -1,5 +1,5 @@
 //
-//  CLLTableViewController.h
+//  TWTTableViewController.h
 //  TableViewCellController
 //
 //  Created by Duncan Lewis on 8/10/15.
@@ -8,23 +8,23 @@
 
 @import UIKit;
 
-#import "CLLTableViewSectionController.h"
-#import "CLLTableViewCellController.h"
-#import "CLLTableViewCellControllerDelegate.h"
+#import "TWTTableViewSectionController.h"
+#import "TWTTableViewCellController.h"
+#import "TWTTableViewCellControllerDelegate.h"
 
 
 /*!
 PILTableViewController is an abstract class that aims to simplify populating a table view by declaratively specifying the table's
 structure and data ahead of time, rather than by implementing a data source and delegate. Rows and sections in the table
-are represented by instances of CLLTableViewCellController and CLLTableViewSectionController. Subclasses should set the
+are represented by instances of TWTTableViewCellController and TWTTableViewSectionController. Subclasses should set the
 table view controller's \c sectionControllers property and the table will handle laying out and displaying those items.
 Generally speaking, the \c tableView property can be supplied via Interface Builder or by programatic instantiation.
 Subclasses may set the \c sectionControllers property during -viewDidLoad. All members of \c sectionControllers are
-assumed to be instances of \c CLLTableViewSectionController or a subclass thereof. Beyond that, the base implementation
-of CLLTableViewController will register nibs and classes for the appropriate cell reuse identifiers; implement table
+assumed to be instances of \c TWTTableViewSectionController or a subclass thereof. Beyond that, the base implementation
+of TWTTableViewController will register nibs and classes for the appropriate cell reuse identifiers; implement table
 view data source and delegate methods; and implement table view cell controller delegate methods.
  */
-@interface CLLTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, CLLTableViewCellControllerDelegate>
+@interface TWTTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, TWTTableViewCellControllerDelegate>
 
 /*!
  @abstract The receiver’s table view.
@@ -40,11 +40,11 @@ view data source and delegate methods; and implement table view cell controller 
 @property (nonatomic, assign) BOOL automaticallyAdjustsTableViewInsetsOnKeyboardFrameChange;
 
 /*!
- @abstract An array of CLLTableViewSectionController objects that define the sections of the table view.
+ @abstract An array of TWTTableViewSectionController objects that define the sections of the table view.
  @discussion This array may be set at any time before \c -viewWillAppear is invoked. Failure to do so will result in
  	an assertion during -viewWillAppear.
  */
-@property (nonatomic, copy) NSArray<CLLTableViewSectionController *> *sectionControllers;
+@property (nonatomic, copy) NSArray<TWTTableViewSectionController *> *sectionControllers;
 
 
 
@@ -52,8 +52,8 @@ view data source and delegate methods; and implement table view cell controller 
 //- (void)insertSectionControllers:(NSArray *)array atIndexes:(NSIndexSet *)indexes;
 //- (void)removeCellControllersAtIndexPaths:(NSArray *)indexPaths;
 //- (void)removeSectionControllersAtIndexes:(NSIndexSet *)indexes;
-//- (void)removeCellControllers:(NSArray<CLLTableViewCellController *> *)cellControllers;
-//- (void)removeSectionControllers:(NSArray<CLLTableViewSectionController *> *)sectionContrllers;
+//- (void)removeCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers;
+//- (void)removeSectionControllers:(NSArray<TWTTableViewSectionController *> *)sectionContrllers;
 //
 //- (void)performBatchUpdates:(void (^)(void))updates completion:(void (^)(void))completion;
 

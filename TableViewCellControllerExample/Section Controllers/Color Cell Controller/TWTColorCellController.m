@@ -1,15 +1,15 @@
 //
-//  CLLColorCellController.m
+//  TWTColorCellController.m
 //  TableViewCellController
 //
 //  Created by Jill Cohen on 3/2/16.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 
-#import "CLLColorCellController.h"
+#import "TWTColorCellController.h"
 
 
-@implementation CLLColorCellController
+@implementation TWTColorCellController
 
 - (void)didSetCell:(UITableViewCell *)oldValue
 {

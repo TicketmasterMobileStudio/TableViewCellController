@@ -1,19 +1,19 @@
 //
-//  CLLPrototypeCellController.m
+//  TWTPrototypeCellController.m
 //  TableViewCellController
 //
 //  Created by Jill Cohen on 3/8/16.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 
-#import "CLLPrototypeCellController.h"
+#import "TWTPrototypeCellController.h"
 
 
-@implementation CLLPrototypeCellController
+@implementation TWTPrototypeCellController
 
 + (NSString *)cellReuseIdentifier
 {
-    return @"CLLPrototypeCell";
+    return @"TWTPrototypeCell";
 }
 
 

@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 
-#import "CLLTableViewController.h"
+#import "TWTTableViewController.h"
 
 
-@interface CLLExampleViewController : CLLTableViewController
+@interface TWTExampleViewController : TWTTableViewController
 
 @end
 

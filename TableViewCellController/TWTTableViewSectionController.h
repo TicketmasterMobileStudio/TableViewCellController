@@ -1,5 +1,5 @@
 //
-//  CLLTableViewSectionController.h
+//  TWTTableViewSectionController.h
 //  TableViewCellController
 //
 //  Created by Duncan Lewis on 8/10/15.
@@ -9,11 +9,11 @@
 @import Foundation;
 
 
-@class CLLTableViewCellController;
+@class TWTTableViewCellController;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CLLTableViewSectionController : NSObject
+@interface TWTTableViewSectionController : NSObject
 
 /*!
  @abstract The title of the section. Generally speaking, it is up to the class managing the section controller to display the
@@ -22,19 +22,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *sectionTitle;
 
 /*!
- @abstract An array of `CLLTableViewCellController` objects that define the content of the section. Defaults to an empty array.
+ @abstract An array of `TWTTableViewCellController` objects that define the content of the section. Defaults to an empty array.
  */
-@property (nonatomic, copy, readonly) NSArray<CLLTableViewCellController *> *cellControllers;
+@property (nonatomic, copy, readonly) NSArray<TWTTableViewCellController *> *cellControllers;
 
 /*!
  @abstract Initializes the section controller with the specified array of cell controllers.
  */
-- (instancetype)initWithCellControllers:(NSArray<CLLTableViewCellController *> *)cellControllers NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers NS_DESIGNATED_INITIALIZER;
 
 /*!
  @abstract Initializes the section controller with the specified array of cell controllers and section title.
  */
-- (instancetype)initWithCellControllers:(NSArray<CLLTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle;
+- (instancetype)initWithCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle;
 
 @end
 
