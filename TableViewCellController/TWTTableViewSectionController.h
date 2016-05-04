@@ -1,8 +1,8 @@
 //
-//  TableViewCellController.h
+//  TWTTableViewSectionController.h
 //  TableViewCellController
 //
-//  Created by Duncan Lewis on 8/4/15.
+//  Created by Duncan Lewis on 8/10/15.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,14 +23,36 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-
-//! Project version number for TableViewCellController.
-FOUNDATION_EXPORT double TableViewCellControllerVersionNumber;
-
-//! Project version string for TableViewCellController.
-FOUNDATION_EXPORT const unsigned char TableViewCellControllerVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <TableViewCellController/PublicHeader.h>
+@import Foundation;
 
 
+@class TWTTableViewCellController;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TWTTableViewSectionController : NSObject
+
+/*!
+ @abstract The title of the section. Generally speaking, it is up to the class managing the section controller to display the
+    section title. Defaults to an empty string.
+ */
+@property (nonatomic, copy) NSString *sectionTitle;
+
+/*!
+ @abstract An array of `TWTTableViewCellController` objects that define the content of the section. Defaults to an empty array.
+ */
+@property (nonatomic, copy, readonly) NSArray<TWTTableViewCellController *> *cellControllers;
+
+/*!
+ @abstract Initializes the section controller with the specified array of cell controllers.
+ */
+- (instancetype)initWithCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers NS_DESIGNATED_INITIALIZER;
+
+/*!
+ @abstract Initializes the section controller with the specified array of cell controllers and section title.
+ */
+- (instancetype)initWithCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle;
+
+@end
+
+NS_ASSUME_NONNULL_END

@@ -1,8 +1,8 @@
 //
-//  TableViewCellController.h
+//  TWTTableViewCellControllerDelegate.h
 //  TableViewCellController
 //
-//  Created by Duncan Lewis on 8/4/15.
+//  Created by Duncan Lewis on 8/11/15.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,14 +23,27 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+@import Foundation;
 
-//! Project version number for TableViewCellController.
-FOUNDATION_EXPORT double TableViewCellControllerVersionNumber;
-
-//! Project version string for TableViewCellController.
-FOUNDATION_EXPORT const unsigned char TableViewCellControllerVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <TableViewCellController/PublicHeader.h>
+@class TWTTableViewCellController;
 
 
+/*!
+ The TWTTableViewCellControllerDelegate protocol declares a set of messages that allows a cell controller communicate
+ necessary changes, e.g., needing to be reloaded or animating a height change.
+ */
+@protocol TWTTableViewCellControllerDelegate <NSObject>
+
+/*!
+ @abstract Invoked when the cell controller’s cell needs to be reloaded.
+ @param cellController The cell controller whose cell needs to be reloaded.
+ */
+- (void)cellControllerRequiresReload:(TWTTableViewCellController *)cellController;
+
+/*!
+ @abstract Invoked when the cell controller’s cell needs an animated height change.
+ @param cellController The cell controller whose cell needs an animated height change.
+ */
+- (void)cellControllerRequiresAnimatedHeightChange:(TWTTableViewCellController *)cellController;
+
+@end

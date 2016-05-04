@@ -1,8 +1,8 @@
 //
-//  TableViewCellController.h
+//  TWTTableViewSectionController.m
 //  TableViewCellController
 //
-//  Created by Duncan Lewis on 8/4/15.
+//  Created by Duncan Lewis on 8/10/15.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,14 +23,39 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "TWTTableViewSectionController.h"
 
-//! Project version number for TableViewCellController.
-FOUNDATION_EXPORT double TableViewCellControllerVersionNumber;
-
-//! Project version string for TableViewCellController.
-FOUNDATION_EXPORT const unsigned char TableViewCellControllerVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <TableViewCellController/PublicHeader.h>
+#import "TWTTableViewCellController.h"
 
 
+@implementation TWTTableViewSectionController
+
+- (instancetype)init
+{
+    return [self initWithCellControllers:@[]];
+}
+
+
+- (instancetype)initWithCellControllers:(NSArray *)cellControllers
+{
+    NSParameterAssert(cellControllers);
+
+    self = [super init];
+
+    if (self) {
+        _cellControllers = [cellControllers copy];
+    }
+
+    return self;
+}
+
+
+- (instancetype)initWithCellControllers:(NSArray<TWTTableViewCellController *> *)cellControllers sectionTitle:(NSString *)sectionTitle
+{
+    self = [self initWithCellControllers:cellControllers];
+    self.sectionTitle = sectionTitle;
+
+    return self;
+}
+
+@end

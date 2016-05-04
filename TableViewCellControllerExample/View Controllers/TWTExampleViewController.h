@@ -1,6 +1,6 @@
 //
-//  TableViewCellController.h
-//  TableViewCellController
+//  ViewController.h
+//  TableViewCellControllerExample
 //
 //  Created by Duncan Lewis on 8/4/15.
 //  Copyright © 2016 Ticketmaster Entertainment, Inc. All rights reserved.
@@ -23,14 +23,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
+#import "TWTTableViewController.h"
 
-//! Project version number for TableViewCellController.
-FOUNDATION_EXPORT double TableViewCellControllerVersionNumber;
 
-//! Project version string for TableViewCellController.
-FOUNDATION_EXPORT const unsigned char TableViewCellControllerVersionString[];
+@interface TWTExampleViewController : TWTTableViewController
 
-// In this header, you should import all the public headers of your framework using statements like #import <TableViewCellController/PublicHeader.h>
-
+@end
 
